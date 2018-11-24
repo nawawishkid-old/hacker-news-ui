@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+  font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
