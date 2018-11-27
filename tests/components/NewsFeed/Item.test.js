@@ -1,7 +1,7 @@
 import React from "react";
 import { render as kentcdoddsRender, cleanup } from "react-testing-library";
 import { BrowserRouter } from "react-router-dom";
-import NewsFeedItem from "../../../components/NewsFeed/Item";
+import NewsFeedItem from "../../../src/components/NewsFeed/Item";
 
 describe("<NewsFeedItem />", () => {
   const hnItemMock = {

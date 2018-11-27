@@ -6,7 +6,7 @@ import {
   fireEvent
 } from "react-testing-library";
 import { BrowserRouter } from "react-router-dom";
-import NewsFeedContainer from "../../../components/NewsFeed/Container";
+import NewsFeedContainer from "../../../src/components/NewsFeed/Container";
 
 describe("<NewsFeedContainer />", () => {
   const props = { sortType: "top", itemsPerLoad: 10 };
