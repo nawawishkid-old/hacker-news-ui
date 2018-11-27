@@ -54,7 +54,7 @@ describe("<NewsFeedContainer />", () => {
   it(
     "should render " +
       props.itemsPerLoad * 2 +
-      " <NewsFeedItem /> after clicking <NewsFeedLoadButton />",
+      " <NewsFeedItem /> after clicking <NewsFeedLoadButton /> to load more news",
     async () => {
       const { getAllByText, getByText } = render();
 

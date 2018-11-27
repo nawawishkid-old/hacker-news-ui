@@ -2,7 +2,8 @@ import axios from "axios";
 import {
   API_URL_LATEST_STORIES,
   API_URL_ITEM,
-  API_URL_TOP_STORIES
+  API_URL_TOP_STORIES,
+  API_URL_USER
 } from "./config";
 
 /**
@@ -17,7 +18,7 @@ function one(id) {
   return axios
     .get(url)
     .then(res => res.data)
-    .catch(err => console.log(err));
+    .catch(axiosErrorHandler);
 }
 
 /**
@@ -55,7 +56,7 @@ function latest(limit = DEFAULT_RESULT_LIMIT, output = TYPE_CONTENT) {
 
       return oneOrBoth(filteredIds, output);
     })
-    .catch(err => console.log(err));
+    .catch(axiosErrorHandler);
 }
 
 /**
@@ -74,9 +75,27 @@ function top(limit = DEFAULT_RESULT_LIMIT, output = TYPE_CONTENT) {
 
       return oneOrBoth(filteredIds, output);
     })
-    .catch(err => console.log(err));
+    .catch(axiosErrorHandler);
 }
 
+function user(userId) {
+  return axios
+    .get(API_URL_USER + "/" + userId + ".json")
+    .then(res => res.data)
+    .catch(axiosErrorHandler);
+}
+
+const axiosErrorHandler = err => {
+  const { response, request } = err;
+
+  console.log("error: ", err.message);
+
+  if (response) {
+    console.log(response);
+  } else if (request) {
+    console.log(request);
+  }
+};
 /**
  * Get callback function for filtering fetched HN items.
  *
@@ -123,4 +142,4 @@ export const TYPE_CONTENT = "content";
 export const TYPE_ID = "id";
 export const TYPE_BOTH = "both";
 export const DEFAULT_RESULT_LIMIT = 25;
-export { one, many, latest, top };
+export { one, many, latest, top, user };

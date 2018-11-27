@@ -60,7 +60,6 @@ function loadMoreNews(ids, setState) {
 }
 
 const NewsFeedContainer = styled(props => {
-  console.log("props: ", props);
   const { itemsPerLoad } = props;
   const [{ storiesId, storiesContent, currentPage }, setState] = React.useState(
     initialState
