@@ -2,10 +2,11 @@ import React from "react";
 import {
   render as kentcdoddsRender,
   cleanup,
-  waitForElement
+  waitForElement,
+  fireEvent
 } from "react-testing-library";
 import { BrowserRouter } from "react-router-dom";
-import NewsFeedContainer from "./Container";
+import NewsFeedContainer from "../../../components/NewsFeed/Container";
 
 describe("<NewsFeedContainer />", () => {
   const props = { sortType: "top", itemsPerLoad: 10 };
@@ -14,6 +15,13 @@ describe("<NewsFeedContainer />", () => {
       <BrowserRouter>
         <NewsFeedContainer {...{ ...props, ...customProps }} />
       </BrowserRouter>
+    );
+  const waitForNewsFeedItems = getAllByText =>
+    waitForElement(() =>
+      getAllByText(
+        (content, element) => element.classList.contains("newsfeed-item"),
+        { selector: "[class^=newsfeed-]" }
+      )
     );
 
   afterEach(cleanup);
@@ -37,16 +45,28 @@ describe("<NewsFeedContainer />", () => {
   });
 
   it("should have " + props.itemsPerLoad + " <NewsFeedItem />", async () => {
-    const { getAllByText, container } = render();
-    console.log("container: ", container);
-    const items = await waitForElement(() =>
-      getAllByText(
-        (content, element) => element.classList.contains("newsfeed-item"),
-        { selector: "[class^=newsfeed-]" }
-      )
-    );
-    console.log("items: ", items);
+    const { getAllByText } = render();
+    const items = await waitForNewsFeedItems(getAllByText);
 
     expect(items.length).toBe(props.itemsPerLoad);
   });
+
+  it(
+    "should render " +
+      props.itemsPerLoad * 2 +
+      " <NewsFeedItem /> after clicking <NewsFeedLoadButton />",
+    async () => {
+      const { getAllByText, getByText } = render();
+
+      await waitForNewsFeedItems(getAllByText);
+
+      const loadButton = getByText("Load More");
+
+      fireEvent.click(loadButton);
+
+      const items = await waitForNewsFeedItems(getAllByText);
+
+      expect(items.length).toBe(props.itemsPerLoad * 2);
+    }
+  );
 });

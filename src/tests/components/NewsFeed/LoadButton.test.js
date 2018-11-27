@@ -1,6 +1,8 @@
 import React from "react";
 // import { render, fireEvent } from "react-testing-library";
-import NewsFeedLoadButton, { DEFAULT_TITLE } from "./LoadButton";
+import NewsFeedLoadButton, {
+  DEFAULT_TITLE
+} from "../../../components/NewsFeed/LoadButton";
 // import "jest-dom/extend-expect";
 
 // test(`<NewsFeedLoadButton />`, () => {
