@@ -1,8 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const Card = styled.div`
+const NewsFeedItem = styled(({ data, order, className }) => (
+  <div className={"newsfeed-item " + className}>
+    <Title data={data} order={order} />
+    <Detail data={data} />
+  </div>
+))`
   max-width: 600px;
   width: 100%;
   border-radius: 5px;
@@ -38,11 +44,16 @@ const Card = styled.div`
   @media screen and (min-width: px) {
   }
 `;
-const CardTitle = styled(({ data, order, className }) => (
-  <div className={"title " + className}>
-    {order + ". "}
+
+NewsFeedItem.propTypes = {
+  data: PropTypes.object.isRequired,
+  order: PropTypes.number.isRequired
+};
+
+const Title = styled(({ data, order, className }) => (
+  <div className={"newsfeed-item-title " + className}>
     <a href={data.url ? data.url : "/news/" + data.id} title={data.title}>
-      {data.title}
+      {order + ". " + data.title}
     </a>
   </div>
 ))`
@@ -55,26 +66,35 @@ const CardTitle = styled(({ data, order, className }) => (
   }
 
   @media screen and (min-width: 768px) {
-    ${Card}:hover &,
-    ${Card}:hover & > a {
+    ${NewsFeedItem}:hover &,
+    ${NewsFeedItem}:hover & > a {
       // left: -100%;
       color: transparent;
       text-shadow: 0 0 3px pink;
     }
   }
 `;
-const CardDetail = styled(({ data, className }) => {
+
+Title.propTypes = {
+  data: PropTypes.object.isRequired,
+  order: PropTypes.number.isRequired
+};
+
+const Detail = styled(({ data, className }) => {
   const { url, id, descendants } = data;
+  const discussionTitle = `Discussion${
+    descendants > 0 ? ` (${descendants})` : ""
+  }`;
 
   return (
-    <div className={"detail " + className}>
+    <div className={"newsfeed-item-detail " + className}>
       {url ? (
-        <Link to={url} title="Go to link" className="link">
+        <a href={url} title="Go to link" className="link">
           Link
-        </Link>
+        </a>
       ) : null}
-      <Link to={"/news/" + id} title="Discussion" className="discussion">
-        Discussion {descendants > 0 ? `(${descendants})` : ""}
+      <Link to={"/news/" + id} title={discussionTitle} className="discussion">
+        {discussionTitle}
       </Link>
     </div>
   );
@@ -104,19 +124,18 @@ const CardDetail = styled(({ data, className }) => {
   @media screen and (min-width: 768px) {
     right: 0;
 
-    ${Card}:hover & {
+    ${NewsFeedItem}:hover & {
       right: 100%;
       background-color: rgba(255, 255, 255, 0.1);
     }
-    ${Card}:hover & > a.link {
+    ${NewsFeedItem}:hover & > a.link {
       display: block;
     }
   }
 `;
 
-export default ({ data, order }) => (
-  <Card>
-    <CardTitle data={data} order={order} />
-    <CardDetail data={data} />
-  </Card>
-);
+Detail.propTypes = {
+  data: PropTypes.object.isRequired
+};
+
+export default NewsFeedItem;

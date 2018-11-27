@@ -23,74 +23,78 @@ const getTestValidItemBothArray = length => ({ ids, content }) => {
   getTestValidItemContentArray(length)(content);
 };
 
-// api.one()
-test(`api.one(${validHNStoryId}) return Hacker News item object`, async () =>
-  console.log("test api.one()") ||
-  (await api.one(validHNStoryId).then(testValidItemContent)));
+describe.skip("API", () => {
+  // api.one()
+  test(`one(${validHNStoryId}) return Hacker News item object`, async () =>
+    console.log("test api.one()") ||
+    (await api.one(validHNStoryId).then(testValidItemContent)));
 
-// api.many
-test(`api.many([${validHNStoryIds}]) return array of ${
-  validHNStoryIds.length
-} Hacker News items object`, async () =>
-  await api
-    .many(validHNStoryIds)
-    .then(res => testItemsLengthEqual(res, validHNStoryIds.length)));
-
-/**
- * api.latest()
- */
-test(
-  "api.latest() returns array of " +
-    api.DEFAULT_RESULT_LIMIT +
-    " Hacker News items object",
-  async () =>
+  // api.many
+  test(`many([${validHNStoryIds}]) return array of ${
+    validHNStoryIds.length
+  } Hacker News items object`, async () =>
     await api
-      .latest()
-      .then(getTestValidItemContentArray(api.DEFAULT_RESULT_LIMIT))
-);
+      .many(validHNStoryIds)
+      .then(res => testItemsLengthEqual(res, validHNStoryIds.length)));
 
-test(`api.latest(${api.DEFAULT_RESULT_LIMIT}, '${
-  api.TYPE_ID
-}') returns array of ${
-  api.DEFAULT_RESULT_LIMIT
-} Hacker News items id only`, async () =>
-  await api
-    .latest(api.DEFAULT_RESULT_LIMIT, api.TYPE_ID)
-    .then(getTestValidItemIdArray(api.DEFAULT_RESULT_LIMIT)));
+  /**
+   * api.latest()
+   */
+  test(
+    "api.latest() returns array of " +
+      api.DEFAULT_RESULT_LIMIT +
+      " Hacker News items object",
+    async () =>
+      await api
+        .latest()
+        .then(getTestValidItemContentArray(api.DEFAULT_RESULT_LIMIT))
+  );
 
-test(`api.latest(${
-  api.DEFAULT_RESULT_LIMIT
-}, 'both') returns { ids, content } of fetched Hacker News items`, async () =>
-  await api
-    .latest(api.DEFAULT_RESULT_LIMIT, api.TYPE_BOTH)
-    .then(getTestValidItemBothArray(api.DEFAULT_RESULT_LIMIT)));
+  test(`latest(${api.DEFAULT_RESULT_LIMIT}, '${
+    api.TYPE_ID
+  }') returns array of ${
+    api.DEFAULT_RESULT_LIMIT
+  } Hacker News items id only`, async () =>
+    await api
+      .latest(api.DEFAULT_RESULT_LIMIT, api.TYPE_ID)
+      .then(getTestValidItemIdArray(api.DEFAULT_RESULT_LIMIT)));
 
-test(`api.latest(${customFilter.name}) accepts custom filter`, async () =>
-  await api.latest(customFilter));
+  test(`latest(${
+    api.DEFAULT_RESULT_LIMIT
+  }, 'both') returns { ids, content } of fetched Hacker News items`, async () =>
+    await api
+      .latest(api.DEFAULT_RESULT_LIMIT, api.TYPE_BOTH)
+      .then(getTestValidItemBothArray(api.DEFAULT_RESULT_LIMIT)));
 
-/**
- * api.top()
- */
-test(`api.top() returns array of top ${
-  api.DEFAULT_RESULT_LIMIT
-} Hacker News items content`, async () =>
-  await api.top().then(getTestValidItemContentArray(api.DEFAULT_RESULT_LIMIT)));
+  test(`latest(${customFilter.name}) accepts custom filter`, async () =>
+    await api.latest(customFilter));
 
-test(`api.top(${api.DEFAULT_RESULT_LIMIT}, '${
-  api.TYPE_ID
-}') returns array of top ${
-  api.DEFAULT_RESULT_LIMIT
-} Hacker News items id only`, async () =>
-  await api
-    .top(api.DEFAULT_RESULT_LIMIT, api.TYPE_ID)
-    .then(getTestValidItemIdArray(api.DEFAULT_RESULT_LIMIT)));
+  /**
+   * api.top()
+   */
+  test(`top() returns array of top ${
+    api.DEFAULT_RESULT_LIMIT
+  } Hacker News items content`, async () =>
+    await api
+      .top()
+      .then(getTestValidItemContentArray(api.DEFAULT_RESULT_LIMIT)));
 
-test(`api.top(${
-  api.DEFAULT_RESULT_LIMIT
-}, 'both') returns { ids, content } of fetched Hacker News items`, async () =>
-  await api
-    .top(api.DEFAULT_RESULT_LIMIT, api.TYPE_BOTH)
-    .then(getTestValidItemBothArray(api.DEFAULT_RESULT_LIMIT)));
+  test(`top(${api.DEFAULT_RESULT_LIMIT}, '${
+    api.TYPE_ID
+  }') returns array of top ${
+    api.DEFAULT_RESULT_LIMIT
+  } Hacker News items id only`, async () =>
+    await api
+      .top(api.DEFAULT_RESULT_LIMIT, api.TYPE_ID)
+      .then(getTestValidItemIdArray(api.DEFAULT_RESULT_LIMIT)));
 
-test(`api.top(${customFilter.name}) accepts custom filter`, async () =>
-  await api.top(customFilter));
+  test(`top(${
+    api.DEFAULT_RESULT_LIMIT
+  }, 'both') returns { ids, content } of fetched Hacker News items`, async () =>
+    await api
+      .top(api.DEFAULT_RESULT_LIMIT, api.TYPE_BOTH)
+      .then(getTestValidItemBothArray(api.DEFAULT_RESULT_LIMIT)));
+
+  test(`top(${customFilter.name}) accepts custom filter`, async () =>
+    await api.top(customFilter));
+});
