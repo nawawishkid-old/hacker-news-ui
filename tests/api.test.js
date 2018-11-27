@@ -1,4 +1,4 @@
-import * as api from "../api";
+import * as api from "../src/api";
 
 const validHNStoryId = 18509083;
 const validHNStoryIds = [validHNStoryId, 18520462];
