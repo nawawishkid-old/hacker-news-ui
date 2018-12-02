@@ -1,7 +1,7 @@
 import React from "react";
 import * as api from "../../api";
 import CommentSingle from "./Single";
-import Loader from "../Helpers/Loader";
+import Loader from "../helpers/Loader";
 
 const CommentLoader = ({ commentIds }) => {
   const [comments, setComments] = React.useState([]);
